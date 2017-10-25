@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="TDD_Java" default="all">
+<project name="${basedir}" default="all">
   
   
   <property file="build.properties"/>
