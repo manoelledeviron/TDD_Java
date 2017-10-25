@@ -369,7 +369,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1508963522209</updated>
-      <workItem from="1508963523809" duration="2535000" />
+      <workItem from="1508963523809" duration="2739000" />
     </task>
     <task id="LOCAL-00001" summary="Added a class with computing methods + build.xml">
       <created>1508964815833</created>
@@ -408,7 +408,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2535000" />
+    <option name="totallyTimeSpent" value="2739000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="805" extended-state="0" />
