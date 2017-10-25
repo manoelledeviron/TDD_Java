@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_tdd_java" default="compile.module.tdd_java">
+  <dirname property="module.tdd_java.basedir" file="${ant.file.module_tdd_java}"/>
+  
+  <property name="module.jdk.home.tdd_java" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.tdd_java" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.tdd_java" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.tdd_java" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
+  
+  <property name="tdd_java.output.dir" value="${module.tdd_java.basedir}/out/production/TDD_Java"/>
+  <property name="tdd_java.testoutput.dir" value="${module.tdd_java.basedir}/out/test/TDD_Java"/>
+  
+  <path id="tdd_java.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="tdd_java.module.production.classpath">
+    <path refid="${module.jdk.classpath.tdd_java}"/>
+  </path>
+  
+  <path id="tdd_java.runtime.production.module.classpath">
+    <pathelement location="${tdd_java.output.dir}"/>
+  </path>
+  
+  <path id="tdd_java.module.classpath">
+    <path refid="${module.jdk.classpath.tdd_java}"/>
+    <pathelement location="${tdd_java.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="tdd_java.runtime.module.classpath">
+    <pathelement location="${tdd_java.testoutput.dir}"/>
+    <pathelement location="${tdd_java.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.tdd_java">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.tdd_java">
+    <patternset refid="excluded.from.module.tdd_java"/>
+  </patternset>
+  
+  <path id="tdd_java.module.sourcepath">
+    <dirset dir="${module.tdd_java.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  <path id="tdd_java.module.test.sourcepath">
+    <dirset dir="${module.tdd_java.basedir}">
+      <include name="test"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.tdd_java" depends="compile.module.tdd_java.production,compile.module.tdd_java.tests" description="Compile module TDD_Java"/>
+  
+  <target name="compile.module.tdd_java.production" depends="register.custom.compilers" description="Compile module TDD_Java; production classes">
+    <mkdir dir="${tdd_java.output.dir}"/>
+    <javac2 destdir="${tdd_java.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.tdd_java}/javac">
+      <compilerarg line="${compiler.args.tdd_java}"/>
+      <bootclasspath refid="tdd_java.module.bootclasspath"/>
+      <classpath refid="tdd_java.module.production.classpath"/>
+      <src refid="tdd_java.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.tdd_java"/>
+    </javac2>
+    
+    <copy todir="${tdd_java.output.dir}">
+      <fileset dir="${module.tdd_java.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.tdd_java.tests" depends="register.custom.compilers,compile.module.tdd_java.production" description="compile module TDD_Java; test classes" unless="skip.tests">
+    <mkdir dir="${tdd_java.testoutput.dir}"/>
+    <javac2 destdir="${tdd_java.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.tdd_java}/javac">
+      <compilerarg line="${compiler.args.tdd_java}"/>
+      <bootclasspath refid="tdd_java.module.bootclasspath"/>
+      <classpath refid="tdd_java.module.classpath"/>
+      <src refid="tdd_java.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.tdd_java"/>
+    </javac2>
+    
+    <copy todir="${tdd_java.testoutput.dir}">
+      <fileset dir="${module.tdd_java.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.tdd_java" description="cleanup module">
+    <delete dir="${tdd_java.output.dir}"/>
+    <delete dir="${tdd_java.testoutput.dir}"/>
+  </target>
+</project>
